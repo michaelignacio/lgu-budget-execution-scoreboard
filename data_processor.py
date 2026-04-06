@@ -170,3 +170,27 @@ def get_summary_stats(df: pd.DataFrame) -> dict:
         'surplus_count': len(df[df['fiscal_health'] == 'Surplus']),
         'deficit_count': len(df[df['fiscal_health'] == 'Deficit']),
     }
+
+
+# Mapping of internal column names to exact spreadsheet headings
+SPREADSHEET_COLUMNS = {
+    'region': 'REGION',
+    'province': 'PROVINCE', 
+    'lgu_name': 'LGU NAME',
+    'lgu_type': 'LGU TYPE',
+    'total_income': 'TOTAL CURRENT OPERATING INCOME',
+    'total_expenditures': 'TOTAL CURRENT OPERATING EXPENDITURES',
+    'net_operating': 'NET OPERATING INCOME/ (LOSS) FROM CURRENT OPERATIONS',
+    'nta': 'National Tax Allotment',
+    'total_local_sources': 'TOTAL LOCAL SOURCES',
+    'total_external': 'TOTAL EXTERNAL SOURCES',
+    'education': 'Education, Culture & Sports/ Manpower Development',
+    'health': 'Health, Nutrition & Population Control',
+    'labor': 'Labor and Employment',
+    'housing': 'Housing and Community Development',
+    'social_welfare': 'Social Services and Social Welfare',
+    'total_social_services': 'TOTAL SOCIAL SERVICES',
+    'economic_services': 'ECONOMIC SERVICES',
+    'debt_service_interest': 'DEBT SERVICE (Interest Expense & Other Charges)',
+    'general_public_services': 'GENERAL PUBLIC SERVICES',
+}

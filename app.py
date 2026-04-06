@@ -7,7 +7,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from data_processor import load_and_clean_data, get_insights, get_summary_stats
+from data_processor import load_and_clean_data, get_insights, get_summary_stats, SPREADSHEET_COLUMNS
 
 # Page configuration
 st.set_page_config(
@@ -195,13 +195,22 @@ def main():
             
             st.header("⚖️ LGU Comparison")
             
-            # Comparison table
+            # Comparison table with exact spreadsheet headings
             compare_data = {
-                'Metric': [
-                    'LGU Name', 'Province', 'Region', 'Type',
-                    'Execution Rate', 'Fiscal Health', 'NTA Dependency',
-                    'Total Income', 'Total Expenditures', 'Net Operating',
-                    'Education %', 'Health %', 'Economic Services %'
+                'Item': [
+                    SPREADSHEET_COLUMNS['lgu_name'],
+                    SPREADSHEET_COLUMNS['province'],
+                    SPREADSHEET_COLUMNS['region'],
+                    SPREADSHEET_COLUMNS['lgu_type'],
+                    'Execution Rate (Calculated)',
+                    'Fiscal Health (Calculated)',
+                    'NTA Dependency (Calculated)',
+                    SPREADSHEET_COLUMNS['total_income'],
+                    SPREADSHEET_COLUMNS['total_expenditures'],
+                    SPREADSHEET_COLUMNS['net_operating'],
+                    f"{SPREADSHEET_COLUMNS['education']} (% of Expenditures)",
+                    f"{SPREADSHEET_COLUMNS['health']} (% of Expenditures)",
+                    f"{SPREADSHEET_COLUMNS['economic_services']} (% of Expenditures)"
                 ],
                 lgu1: [
                     row1['lgu_name'], row1['province'], row1['region'], row1['lgu_type'],
@@ -417,38 +426,38 @@ def main():
                 
                 with m1:
                     st.markdown(f"""
-                    <div class="metric-label">Total Income</div>
+                    <div class="metric-label">{SPREADSHEET_COLUMNS['total_income']}</div>
                     <div class="metric-value">{format_currency(row['total_income'])}</div>
                     """, unsafe_allow_html=True)
                 
                 with m2:
                     st.markdown(f"""
-                    <div class="metric-label">Expenditures</div>
+                    <div class="metric-label">{SPREADSHEET_COLUMNS['total_expenditures']}</div>
                     <div class="metric-value">{format_currency(row['total_expenditures'])}</div>
                     """, unsafe_allow_html=True)
                 
                 with m3:
                     st.markdown(f"""
-                    <div class="metric-label">NTA Dependency</div>
+                    <div class="metric-label">National Tax Allotment (%)</div>
                     <div class="metric-value">{row['nta_dependency']:.1f}%</div>
                     """, unsafe_allow_html=True)
                 
                 with m4:
                     st.markdown(f"""
-                    <div class="metric-label">Net Operating</div>
+                    <div class="metric-label">{SPREADSHEET_COLUMNS['net_operating']}</div>
                     <div class="metric-value">{format_currency(row['net_operating'])}</div>
                     """, unsafe_allow_html=True)
                 
-                # Sector breakdown
-                st.markdown("**Sector Spending:**")
+                # Sector breakdown with exact spreadsheet headings
+                st.markdown(f"**{SPREADSHEET_COLUMNS['total_social_services']} & {SPREADSHEET_COLUMNS['economic_services']}:**")
                 sec1, sec2, sec3 = st.columns(3)
                 
                 with sec1:
-                    st.markdown(f"📚 Education: **{row['education_pct']:.1f}%**")
+                    st.markdown(f"📚 {SPREADSHEET_COLUMNS['education']}: **{row['education_pct']:.1f}%**")
                 with sec2:
-                    st.markdown(f"🏥 Health: **{row['health_pct']:.1f}%**")
+                    st.markdown(f"🏥 {SPREADSHEET_COLUMNS['health']}: **{row['health_pct']:.1f}%**")
                 with sec3:
-                    st.markdown(f"🏗️ Economic: **{row['economic_pct']:.1f}%**")
+                    st.markdown(f"🏗️ {SPREADSHEET_COLUMNS['economic_services']}: **{row['economic_pct']:.1f}%**")
                 
                 # Insights
                 insights = get_insights(row)
