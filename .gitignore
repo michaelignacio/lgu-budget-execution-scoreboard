@@ -46,6 +46,10 @@ Thumbs.db
 *.xls
 *.parquet
 
+# But allow the LGU data file for deployment
+!sheet 1.csv
+!sheet 2.csv
+
 # Logs
 *.log
 
