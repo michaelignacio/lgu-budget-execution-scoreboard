@@ -47,10 +47,18 @@ def load_and_clean_data(filepath: str) -> pd.DataFrame:
     # Remove any completely empty rows
     df = df.dropna(subset=['region', 'province', 'lgu_name'], how='all')
     
-    # Clean string columns
+    # Clean string columns - handle NaN values properly
     for col in ['region', 'province', 'lgu_name', 'lgu_type']:
         if col in df.columns:
-            df[col] = df[col].astype(str).str.strip()
+            # Replace NaN with empty string first, then convert to string and strip
+            df[col] = df[col].fillna('').astype(str).str.strip()
+            # Replace 'nan' strings (from original NaN) with empty string
+            df[col] = df[col].replace('nan', '')
+    
+    # Remove rows where key identifiers are empty after cleaning
+    df = df[df['region'] != '']
+    df = df[df['province'] != '']
+    df = df[df['lgu_name'] != '']
     
     # Convert numeric columns (handle commas and convert to float)
     numeric_cols = [
