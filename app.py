@@ -97,7 +97,79 @@ def load_data():
     return load_and_clean_data('sheet 1.csv')
 
 
+def show_about():
+    """Display the About page with app information and FAQ."""
+    st.markdown('<div class="main-header">ℹ️ About</div>', unsafe_allow_html=True)
+    
+    st.markdown("""
+    ## What is this app?
+    
+    The **LGU Budget Execution Scorecard** is a tool for analyzing how well Local Government Units (LGUs) in the Philippines are managing their budgets.
+    
+    ### Why it matters
+    
+    When LGUs don't spend their allocated budgets, communities miss out on:
+    - 🏥 Health services and facilities
+    - 📚 Education programs and schools  
+    - 🛣️ Infrastructure and roads
+    - 💼 Economic development projects
+    
+    ### Key Metrics Explained
+    
+    | Metric | What it means |
+    |--------|---------------|
+    | **Execution Rate** | How much of the budget was actually spent (higher is generally better) |
+    | **Fiscal Health** | Whether the LGU has a surplus (extra money) or deficit (overspent) |
+    | **NTA Dependency** | How much the LGU relies on national government funding vs. local revenue |
+    | **Social Services %** | Portion of spending on education, health, housing, and welfare |
+    
+    ### Data Source
+    
+    - **Source:** Bureau of Local Government Finance (BLGF)
+    - **Dataset:** Statement of Receipts and Expenditures (SRE)
+    - **Year:** FY 2024 (Final)
+    - **Coverage:** 1,700+ LGUs nationwide
+    
+    ### How to Use
+    
+    1. **Browse** — Scroll through LGU scorecards to see performance
+    2. **Filter** — Use the sidebar to narrow by region, province, or LGU type
+    3. **Search** — Find specific cities or municipalities by name
+    4. **Compare** — Enable "Compare LGUs" to see two LGUs side-by-side
+    5. **Export** — Download filtered data as CSV
+    
+    ### Color Coding
+    
+    - 🟢 **Green (≥90%)** — High execution, spending budget effectively
+    - 🟡 **Yellow (70-90%)** — Moderate execution, room for improvement
+    - 🔴 **Red (<70%)** — Low execution, significant underspending
+    
+    ### Frequently Asked Questions
+    
+    **Q: What is an LGU?**
+    A: Local Government Unit — refers to provinces, cities, and municipalities in the Philippines.
+    
+    **Q: Why is execution rate important?**
+    A: Low execution means allocated funds aren't reaching communities. This delays infrastructure, health services, and education programs.
+    
+    **Q: What is NTA?**
+    A: National Tax Allotment — the share of national taxes distributed to LGUs. High NTA dependency means the LGU relies heavily on national funding rather than local revenue.
+    
+    **Q: How often is the data updated?**
+    A: The BLGF releases final data annually. This app uses FY 2024 final data.
+    
+    """)
+
+
 def main():
+    # Page navigation
+    st.sidebar.title("📍 Navigation")
+    page = st.sidebar.radio("Go to", ["Dashboard", "About"])
+    
+    if page == "About":
+        show_about()
+        return
+    
     # Header
     st.markdown('<div class="main-header">📊 LGU Budget Execution Scorecard</div>', unsafe_allow_html=True)
     st.markdown('<div class="sub-header">FY 2024 Fiscal Performance Dashboard | Bureau of Local Government Finance Data</div>', unsafe_allow_html=True)
